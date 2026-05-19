@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/hapi-bortday-jusika/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
