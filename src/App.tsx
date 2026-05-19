@@ -30,7 +30,6 @@ const FriesIcon = ({ size = 24 }: { size?: number }) => (
 );
 
 
-//test
 function BirthdayCounter() {
   const birth = new Date(2003, 4, 20, 0, 0, 0, 0); // May 20, 2003 (month is 0-indexed)
   const [now, setNow] = useState(() => new Date());
@@ -40,36 +39,14 @@ function BirthdayCounter() {
     return () => clearInterval(id);
   }, []);
 
-  const thisYearBirthday = new Date(now.getFullYear(), 4, 20, 0, 0, 0, 0);
+  const thisYearBirthday = new Date(now.getFullYear(), birth.getMonth(), birth.getDate(), 0, 0, 0, 0);
+  const lastBirthday = now >= thisYearBirthday
+    ? thisYearBirthday
+    : new Date(now.getFullYear() - 1, birth.getMonth(), birth.getDate(), 0, 0, 0, 0);
 
-  const msInDay = 1000 * 60 * 60 * 24;
-
-  if (now < thisYearBirthday) {
-    // Countdown to next birthday
-    const diff = thisYearBirthday.getTime() - now.getTime();
-    const days = Math.floor(diff / msInDay);
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-    const turning = thisYearBirthday.getFullYear() - birth.getFullYear();
-
-    return (
-      <div className="inline-flex items-center gap-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-pink-50 shadow-sm">
-        <div className="text-sm md:text-base text-stone-600">Birthday:</div>
-        <div className="text-lg md:text-2xl font-bold text-rose-500">May 20</div>
-        <div className="text-sm md:text-base text-stone-600">in</div>
-        <div className="text-lg md:text-2xl font-black text-yellow-400">
-          {days}d {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-        </div>
-        <div className="text-sm md:text-base text-stone-600">(turning {turning})</div>
-      </div>
-    );
-  }
-
-  // After (or on) birthday: show continuous age (years, days since last birthday, hh:mm:ss)
-  const lastBirthday = thisYearBirthday;
   const ageYears = lastBirthday.getFullYear() - birth.getFullYear();
   const sinceMs = now.getTime() - lastBirthday.getTime();
+  const msInDay = 1000 * 60 * 60 * 24;
   const daysSince = Math.floor(sinceMs / msInDay);
   const hoursSince = Math.floor((sinceMs / (1000 * 60 * 60)) % 24);
   const minutesSince = Math.floor((sinceMs / (1000 * 60)) % 60);
@@ -77,13 +54,13 @@ function BirthdayCounter() {
 
   return (
     <div className="inline-flex items-center gap-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-pink-50 shadow-sm">
-      <div className="text-sm md:text-base text-stone-600">Age:</div>
+      <div className="text-sm md:text-base text-stone-600">Current age:</div>
       <div className="text-lg md:text-2xl font-bold text-rose-500">{ageYears} years</div>
       <div className="text-sm md:text-base text-stone-600">+</div>
       <div className="text-lg md:text-2xl font-black text-yellow-400">
         {daysSince}d {String(hoursSince).padStart(2, '0')}:{String(minutesSince).padStart(2, '0')}:{String(secondsSince).padStart(2, '0')}
       </div>
-      <div className="text-sm md:text-base text-stone-600">since last birthday</div>
+      <div className="text-sm md:text-base text-stone-600">since birthday</div>
     </div>
   );
 }
