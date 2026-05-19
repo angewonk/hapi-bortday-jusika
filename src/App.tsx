@@ -185,7 +185,7 @@ export default function App() {
               <Zap className="text-yellow-400 fill-yellow-200" size={24} />
             </div>
             <h1 className="font-display text-4xl md:text-6xl mb-4 md:mb-6 text-rose-500 font-black tracking-tighter">
-              oh ano, saan sino, bakit, <br/>
+              oh ano, saan, sino, bakit, <br/>
               <span className="text-blue-400">sa panong</span><br/>
               paraan?
             </h1>
