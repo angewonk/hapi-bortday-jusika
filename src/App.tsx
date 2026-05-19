@@ -29,6 +29,8 @@ const FriesIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
+
+//test
 function BirthdayCounter() {
   const birth = new Date(2003, 4, 20, 0, 0, 0, 0); // May 20, 2003 (month is 0-indexed)
   const [now, setNow] = useState(() => new Date());
