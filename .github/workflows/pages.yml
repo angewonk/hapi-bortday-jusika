@@ -43,6 +43,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify built entry is production HTML
+        run: |
+          if grep -q 'src/main.tsx' dist/index.html; then
+            echo "dist/index.html still points to src/main.tsx; aborting deploy"
+            exit 1
+          fi
+
+      - name: Prepare Pages fallback files
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
